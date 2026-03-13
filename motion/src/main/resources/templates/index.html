@@ -1,11 +1,35 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h2>안녕 모션</h2>
-  </body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Notion Clone</title>
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body>
+
+	<div class="app">
+		<div th:replace="~{layout/aside :: asideFragment}"></div>
+
+		<main class="main">
+			<header class="topbar">
+				<div class="topbar-left">
+					경로 넣을 자리
+				</div>
+
+				<div class="topbar-right">
+					<span class="editing-state">지금 편집</span>
+					<button class="share-btn"><svg aria-hidden="true" role="graphics-symbol" viewBox="3.97 0 12.06 20" class="lock" style="width: auto; height: 16px; display: block; fill: inherit; flex-shrink: 0; color: inherit;"><path d="M10.55 12.808a1.35 1.35 0 1 0-1.1 0v1.242a.55.55 0 0 0 1.1 0z"></path><path d="M10 1.95a4 4 0 0 0-4 4v1.433a2.426 2.426 0 0 0-2.025 2.392v5.4A2.425 2.425 0 0 0 6.4 17.6h7.2a2.425 2.425 0 0 0 2.425-2.425v-5.4A2.426 2.426 0 0 0 14 7.383V5.95a4 4 0 0 0-4-4m2.75 5.4h-5.5v-1.4a2.75 2.75 0 0 1 5.5 0zM5.225 9.775c0-.649.526-1.175 1.175-1.175h7.2c.649 0 1.175.526 1.175 1.175v5.4c0 .649-.526 1.175-1.175 1.175H6.4a1.175 1.175 0 0 1-1.175-1.175z"></path></svg> 공유 <svg aria-hidden="true" role="graphics-symbol" viewBox="3.06 0 9.88 16" class="arrowChevronSingleDownSmall" style="width: auto; height: 12px; display: block; fill: var(--c-icoSec); flex-shrink: 0; color: var(--c-icoSec); transform: rotate(0deg); transition: transform 150ms;"><path d="m12.76 6.52-4.32 4.32a.62.62 0 0 1-.44.18.62.62 0 0 1-.44-.18L3.24 6.52a.63.63 0 0 1 0-.88c.24-.24.64-.24.88 0L8 9.52l3.88-3.88c.24-.24.64-.24.88 0s.24.64 0 .88"></path></svg></button>
+					<button class="icon-btn"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 20 20" class="star" style="width: 20px; height: 20px; display: block; fill: var(--c-icoPri); flex-shrink: 0;"><path d="M10 2.399c.27 0 .51.174.594.432l1.507 4.636h4.874a.625.625 0 0 1 .367 1.13L13.4 11.462l1.506 4.636a.625.625 0 0 1-.962.699L10 13.932l-3.943 2.865a.625.625 0 0 1-.962-.699L6.6 11.462 2.658 8.597a.625.625 0 0 1 .367-1.13h4.874L9.406 2.83A.625.625 0 0 1 10 2.399m0 2.647L8.948 8.285a.625.625 0 0 1-.595.432H4.95l2.754 2c.22.16.31.442.227.7l-1.052 3.238 2.755-2.001a.625.625 0 0 1 .734 0l2.755 2-1.052-3.237a.625.625 0 0 1 .227-.7l2.754-2h-3.405a.625.625 0 0 1-.594-.432z"></path></svg></button>
+					<button class="icon-btn"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 20 20" class="ellipsis" style="width: 22px; height: 22px; display: block; fill: var(--c-icoPri); flex-shrink: 0; color: var(--c-icoPri);"><path d="M4 11.375a1.375 1.375 0 1 0 0-2.75 1.375 1.375 0 0 0 0 2.75m6 0a1.375 1.375 0 1 0 0-2.75 1.375 1.375 0 0 0 0 2.75m6 0a1.375 1.375 0 1 0 0-2.75 1.375 1.375 0 0 0 0 2.75"></path></svg></button>
+				</div>
+			</header>
+
+			<section class="page-wrap">
+				<div class="page-title">새 페이지</div>
+
+			</section>
+		</main>
+	</div>
+
+</body>
 </html>
