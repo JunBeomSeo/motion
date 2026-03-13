@@ -1,11 +1,11 @@
-package com.motion.motion;
+package com.motion.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
-public class motionController {
+public class IndexController {
 
     @GetMapping("/")
     public String goPage() {
