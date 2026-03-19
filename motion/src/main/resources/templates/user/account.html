@@ -1,0 +1,248 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .motion {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .motionContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .motionContainer__title {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 30px;
+        width: 300px;
+      }
+      .motionContainer__title img {
+        width: 40px;
+        height: 40px;
+      }
+      .motionContainer__title__text {
+        line-height: 0.5;
+      }
+      .motionContainer__title__text h2 {
+        font-size: 1.3rem;
+      }
+      .subTitle {
+        color: #a19e9a;
+      }
+      .motionContainer__form {
+        width: 300px;
+        text-align: left;
+      }
+
+      .motionContainer__form label {
+        display: block;
+        margin-bottom: 6px;
+        color: #7d7a76;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+      .motionContainer__form input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+
+      .motionContainer__form input[type="button"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #227fdb;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+      }
+
+      .motionContainer__form input[type="button"]:hover {
+        background-color: #1e6fc2;
+      }
+      .motionContainer__form input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #227fdb;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+      }
+
+      .motionContainer__form input[type="submit"]:hover {
+        background-color: #1e6fc2;
+      }
+      .motionContainer__form p {
+        font-size: 0.8rem;
+        color: #bab7b4;
+        margin: 0;
+        margin-bottom: 20px;
+      }
+      .motionContainer__row {
+        margin-top: 30px;
+        width: 230px;
+      }
+      .motionContainer__row p {
+        font-size: 0.8rem;
+        color: #7d7a76;
+      }
+      .motionContainer__row a {
+        color: #888;
+      }
+      .motionContainer__row a:hover {
+        color: #2683de;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/accountSubmit" method="POST" enctype="multipart/form-data">
+    <section class="motion">
+      <div class="motionContainer">
+        <div class="motionContainer__title">
+          <img src="/images/motionLogo.png" />
+          <div class="motionContainer__title__text">
+            <h2>나만의 워크스페이스</h2>
+            <h2 class="subTitle">Motion 계정에 가입</h2>
+          </div>
+        </div>
+        <div class="motionContainer__form">
+          <div class="motionContainer__form__label">
+            <label>이메일</label>
+          </div>
+          <div>
+            <input type="text" name="email" id="email" placeholder="이메일 주소를 입력하세요."/>
+            <div id="authArea" style="display: none">
+              <label>인증 코드</label>
+              <input type="text" name="authCode" id="authCode" placeholder="코드 입력"/>
+              <p>수신함으로 코드를 보내드렸습니다.</p>
+            </div>
+            <input type="button" value="계속" onclick="sendCode()" />
+          </div>
+        </div>
+        <div class="motionContainer__row">
+          <p>
+            계속 진행하면 
+            <a href="#">이용약관</a> <span>및 </span>
+            <a href="#">개인정보처리방침을 이해하고 동의하는 것으로 간주됩니다.</a>
+          </p>
+        </div>
+      </div>
+    </section>
+    </form>
+  </body>
+  <script>
+    var xhr;
+    function getXHR() {
+      if (window.ActiveXObject) {
+        return new ActiveXObject("Msxml2.XMLHTTP");
+      } else if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+      } else {
+        return null;
+      }
+    }
+    function sendCode() {
+      var authCode = document.getElementById("authCode").value;
+      if (authCode !== "") {
+        authCodeCheck();
+        return;
+      }
+
+      var email = document.getElementById("email").value;
+
+      if (email.trim() == "") {
+        alert("이메일을 입력해주세요.");
+        return;
+      }
+
+      if (!email.includes("@") || !email.includes(".")) {
+        alert("올바른 이메일 형식이 아닙니다.");
+        return;
+      }
+
+      xhr = getXHR();
+      xhr.onreadystatechange = sendCodeResult;
+
+      xhr.open("POST", "/account/send-code", true);
+
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      xhr.send("email=" + encodeURIComponent(email));
+    }
+    
+    function sendCodeResult() {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          var result = xhr.responseText;
+
+          if (result == "ok") {
+            alert("인증코드가 이메일로 전송되었습니다.");
+            document.getElementById("authArea").style.display = "block";
+          }else{
+            alert("이미 사용 중인 이메일입니다.");
+            document.getElementById('email').value='';
+          }
+        }
+      }
+    }
+
+    function authCodeCheck() {
+      var authCode = document.getElementById("authCode").value;
+
+      xhr = getXHR();
+      xhr.onreadystatechange = authCodeCheckResult;
+      xhr.open('POST', '/authCodeCheck', true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.send("authCode=" + authCode);
+    }
+    function authCodeCheckResult(){
+      if(xhr.readyState == 4){
+        if(xhr.status == 200){
+            var result = xhr.responseText;
+
+            if(result == "ok"){
+              document.querySelector(".motionContainer__form").innerHTML = `
+                
+                <div style="text-align:center; margin-bottom:20px;">
+                  <label for="profileInput" style="cursor:pointer;">
+                    <img id="profilePreview" src="/images/defaultProfile.png" 
+                        style="width:80px; height:80px; border-radius:50%; border:1px solid #ddd;" />
+                    <p style="font-size:0.8rem; color:#888;">사진 추가</p>
+                  </label>
+                  <input type="file" name="profile" id="profileInput" style="display:none;" accept="image/*" onchange="previewImage(event)" />
+                </div>
+
+                <label>이름</label>
+                <input type="text" id="name" name="userName" placeholder="이름 입력" />
+
+                <input type="submit" value="회원가입 완료" />
+              `;
+            }else{
+              alert('인증번호가 일치하지 않습니다.');
+            }
+        }
+      }
+    }
+    function previewImage(event){
+        const file = event.target.files[0];
+        if(file){
+            const reader = new FileReader();
+            reader.onload = function(e){
+                document.getElementById("profilePreview").src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+  </script>
+</html>

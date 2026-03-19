@@ -1,0 +1,85 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Motion Login</title>
+    <style>
+      .motion {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .motionContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .motionContainer__title {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 30px;
+      }
+      .motionContainer__title img {
+        width: 60px;
+        height: 60px;
+      }
+      .motionContainer__btns {
+        width: 100%;
+      }
+      .login {
+        border: none;
+        border-radius: 8px;
+        background-color: #227fdb;
+        color: white;
+        padding: 0.7rem;
+        width: 100%;
+        margin-bottom: 8px;
+      }
+      .login:hover {
+        cursor: pointer;
+        background-color: #1e6fc2;
+      }
+      .account {
+        border: none;
+        border-radius: 8px;
+        background-color: #a19e9a;
+        color: white;
+        padding: 0.7rem;
+        width: 100%;
+      }
+      .account:hover {
+        cursor: pointer;
+        background-color: #7d7a76;
+      }
+    </style>
+  </head>
+  <body>
+    <form name="loginView" action="loginPage">
+      <section class="motion">
+        <div class="motionContainer">
+          <div class="motionContainer__title">
+            <img src="/images/motionLogo.png" />
+            <h2>Motion - 나만의 워크스페이스 만들기</h2>
+          </div>
+          <div class="motionContainer__btns">
+            <input type="submit" name="loginBtn" value="로그인" class="login" />
+            <input
+              type="button"
+              name="accountBtn"
+              value="회원가입"
+              onclick="account()"
+              class="account"
+            />
+          </div>
+        </div>
+      </section>
+    </form>
+  </body>
+  <script>
+    function account() {
+      window.location.href = "accountPage";
+    }
+  </script>
+</html>
